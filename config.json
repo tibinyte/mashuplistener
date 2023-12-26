@@ -1,0 +1,12 @@
+{
+    "token": "",
+    "prefix": "",
+    "dbname": "",
+    "user": "",
+    "password": "",
+    "host": "",
+    "port": 5432,
+    "login": false,
+    "cfHandle": "",
+    "cfPassword":""
+}
