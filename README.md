@@ -1,6 +1,6 @@
 # Codeforces Mashup Listener
 
-Codeforces Mashup Listener is a Discord bot primarily designed to monitor private gym contests (but can also monitor public gyms and contests). The idea for this project stemmed from the need to track tester's real-time performance in their virtual participation for future Codeforces rounds. Rather than manually checking Codeforces every minute, this bot automates the process.
+Codeforces Mashup Listener is a Discord bot primarily designed to monitor private gym contests (but can also monitor public gyms and contests). The idea for this project stemmed from the need to track testers' real-time performance in their virtual participation for future Codeforces rounds. Rather than manually checking Codeforces every minute, this bot automates the process.
 
 ## Overview
 
@@ -34,6 +34,6 @@ The repository includes a configuration file `config.json` with the following en
 
 ## Note
 
-The bot's current version might not support large-scale monitoring due to its reliance on the host's IP address. However, the addition of proxies can bypass Codeforces rate limiting.
+The bot's current version might not support large-scale monitoring due to its reliance on the host's IP address. However, the addition of proxies can bypass Codeforces' rate limiting.
 
 Feel free to enhance the bot further based on your needs and usage scenarios.
