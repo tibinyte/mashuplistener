@@ -32,6 +32,7 @@ async def on_ready():
     adam.start()
 
 @bot.command()
+@commands.has_permissions(administrator=True)
 async def addwatch(ctx, *args): # args[0] is the name of the watch, args[1] is the mashup link, args[2] is the notification channel
    if len(args) < 3 :
        await ctx.reply("Wrong format! The correct usage of the addwatch command is `!addwatch <name> <mashup link> <channel id>`!")
@@ -48,13 +49,19 @@ async def addwatch(ctx, *args): # args[0] is the name of the watch, args[1] is t
     conn.commit()
     await ctx.reply("Watch " + args[0] + " added successfully!")
 
+@addwatch.error
+async def addwatch_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.reply("You don't have the necessary permissions to use this command.")
+
 @bot.command()
+@commands.has_permissions(administrator=True)
 async def remwatch(ctx, *args): # args[0] is the name of the watch, args[1] is the mashup link
    if len(args) < 1 :
        await ctx.reply("Wrong format! The correct usage of the remwatch command is `!remwatch <name>`!")
        return
    cursor.execute("SELECT id FROM watches WHERE name = %s AND serverid = %s", (args[0], str(ctx.guild.id)))
-   print(args[0]);
+   print(args[0])
    result = cursor.fetchone()
    if result:
     print(result[0])
@@ -64,7 +71,12 @@ async def remwatch(ctx, *args): # args[0] is the name of the watch, args[1] is t
     await ctx.reply("Watch " + args[0] + " removed successfully!")
    else:
     await ctx.reply("There is no such watch for this server!")
-   
+
+@remwatch.error
+async def remwatch_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.reply("You don't have the necessary permissions to use this command.")
+
 
 @bot.command()
 async def watches(ctx):
