@@ -68,7 +68,7 @@ def scrapeSubmissions(gymlink):
         # Extracting verdict
         verdict_element = submission.find(class_='status-cell')
         verdict_span = verdict_element.find('span') if verdict_element else None
-        verdict = verdict_span.text.strip()
+        verdict = verdict_span.text.strip() if verdict_span else None
                 
 
         # Extracting time consumed
@@ -106,3 +106,5 @@ async def scrapeSubmissions_async(url):
     loop = asyncio.get_running_loop()
     result = await loop.run_in_executor(None, scrapeSubmissions, url)
     return result
+
+

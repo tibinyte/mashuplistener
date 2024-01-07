@@ -112,7 +112,7 @@ async def sendMessage(submission, watch):
    if channel:
       await channel.send(embed=embed)
 
-@tasks.loop(seconds=300)
+@tasks.loop(seconds=600)
 async def adam():
    cursor.execute("SELECT * FROM watches")
    result = cursor.fetchall()
