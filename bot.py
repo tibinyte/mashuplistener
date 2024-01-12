@@ -96,6 +96,9 @@ async def watches(ctx):
 
 async def sendMessage(submission, watch):
    color = discord.Color.from_rgb(255, 0, 0)
+   for element in submission:
+      if element is None:
+         return False
    if submission['verdict'] == "Accepted" or submission['verdict'] == "Perfect result: 100 points":
        color = discord.Color.from_rgb(0, 255, 0)
    id_link = f"[{submission['id']}]({watch[4]}/submission/{submission['id']})"
@@ -111,7 +114,9 @@ async def sendMessage(submission, watch):
    channel = bot.get_channel(int(watch[3]))
    if channel:
       await channel.send(embed=embed)
-
+      return True
+   else:
+      return False
 @tasks.loop(seconds=600)
 async def adam():
    cursor.execute("SELECT * FROM watches")
@@ -123,9 +128,9 @@ async def adam():
          cursor.execute("SELECT COUNT(*) FROM processed WHERE submissionid=%s AND watchid=%s", (submission['id'], str(watch[0])))
          results2 = cursor.fetchall()
          if(results2[0][0] == 0):
-            cursor.execute("INSERT INTO processed (submissionid, watchid) VALUES(%s,%s)", (submission['id'], str(watch[0])))
-            conn.commit()
-            await sendMessage(submission, watch)
+            if await sendMessage(submission,watch):
+                cursor.execute("INSERT INTO processed (submissionid, watchid) VALUES(%s,%s)", (submission['id'], str(watch[0])))
+                conn.commit()
 
 
 bot.run(config['token'])
