@@ -97,7 +97,7 @@ async def watches(ctx):
 async def sendMessage(submission, watch):
    color = discord.Color.from_rgb(255, 0, 0)
    for element in submission:
-      if element is None:
+      if submission[element] is None:
          return False
    if submission['verdict'] == "Accepted" or submission['verdict'] == "Perfect result: 100 points":
        color = discord.Color.from_rgb(0, 255, 0)
