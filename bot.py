@@ -1,9 +1,15 @@
 from scrape import config,scrapeSubmissions_async
 import discord
+import datetime,time
 from discord.ext import tasks,commands
 import psycopg2
 import random
 import re
+
+
+start_time = time.time()
+
+print(start_time)
 
 
 conn = psycopg2.connect(
@@ -30,6 +36,18 @@ def isValidGymLink(link):
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
     adam.start()
+
+@bot.command(pass_context=True)
+async def uptime(ctx):
+        current_time = time.time()
+        difference = int(round(current_time - start_time))
+        text = str(datetime.timedelta(seconds=difference))
+        embed = discord.Embed(colour=0xc8dc6c)
+        embed.add_field(name="Uptime", value=text)
+        try:
+            await ctx.send(embed=embed)
+        except discord.HTTPException:
+            await ctx.send("Current uptime: " + text)
 
 @bot.command()
 @commands.has_permissions(administrator=True)
